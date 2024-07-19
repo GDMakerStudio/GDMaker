@@ -1,0 +1,3 @@
+[submodule "GDMaker"]
+	path = GDMaker
+	url = https://github.com/GDMakerStudio/GDMaker.git
