@@ -1,0 +1,2 @@
+/root/GDMaker/build/CMakeFiles/edit_cache.dir
+/root/GDMaker/build/CMakeFiles/rebuild_cache.dir
