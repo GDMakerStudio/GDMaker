@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "variant.h": "c",
+        "struct_db.h": "c",
+        "error_macros.h": "c",
+        "stdio.h": "c"
+    },
+    "cmake.configureOnOpen": false,
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc"
+}
