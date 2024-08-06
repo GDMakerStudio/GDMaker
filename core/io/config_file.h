@@ -14,7 +14,7 @@ typedef struct {
     int pair_count;
 } ConfigSection;
 
-typedef struct {
+typedef struct  ConfigFile{
     ConfigSection *sections;
     int section_count;
 } ConfigFile;

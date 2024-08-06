@@ -9,21 +9,50 @@
 #include "core/error/error_list.h"
 
 
-void register_class(StructDB *db, StructInfo *p_class) {
-    // you need to check if the class already exists
-    if (find_struct_info(db, p_class->name)) {
-        ERROR_PRINT("class '%s' is a already registered. \n p_class->name");
+void register_class(StructDB *db, const char *class_name) {
+    //  you should need for check if the class already exists
+    if (find_struct_info(db, class_name)) {
+        fprintf(stderr, "Class '%s' is already registered.\n", class_name);
         return;
     }
 
-    db->structs = realloc(db->structs, (db->struct_count + 1) * sizeof(StructInfo *));
-    if (!db->structs) {
-        ERROR_PRINT("memory reallocation failed for struct database!\n");
-        return FAILED;
+    StructInfo *new_class = malloc(sizeof(StructInfo));
+    if (!new_class) {
+        fprintf(stderr, "Memory allocation failed for class '%s'!\n", class_name);
+        return;
     }
-    db->structs[db->struct_count];
-    db->struct_count++;
+
+    new_class->name = strdup(class_name);
+    if (!new_class->name) {
+        fprintf(stderr, "Memory allocation failed for class name '%s'!\n", class_name);
+        free(new_class);
+        return;
+    }
+    new_class->parent_class_name = NULL;
+    new_class->methods = NULL; 
+    new_class->method_count = 0; 
+    new_class->properties = NULL;
+    new_class->property_count = 0;
+    new_class->enums = NULL; 
+    new_class->enum_count = 0; 
+    new_class->signals = NULL; 
+    new_class->signal_count = 0;
+    new_class->inheriters = NULL; 
+    new_class->inheriter_count = 0; 
+
+    // resize the database to accommodate the new class
+    StructInfo **new_structs = realloc(db->structs, (db->struct_count + 1) * sizeof(StructInfo *));
+    if (!new_structs) {
+        fprintf(stderr, "failed memory reallocation failed for struct database!\n");
+        free(new_class->name);
+        free(new_class);
+        return;
+    }
+    db->structs = new_structs; // update the database struct pointer
+    db->structs[db->struct_count] = new_class;
+    db->struct_count++; 
 }
+
 
 StructInfo* find_struct_info(StructDB *db, const char *class_name) {
     for (int i = 0; i < db->struct_count; i++) {

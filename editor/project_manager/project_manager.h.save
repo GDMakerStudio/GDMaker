@@ -1,0 +1,24 @@
+#ifndef PROJECT_MANAGER_H
+#define PROJECT_MANAGER_H
+
+
+
+#include "bake/bake_config.h"
+#include "core/os/os.h"
+#include "core/os/timer.h"
+#include "core/io/config_file.h"
+
+
+
+typedef struct ProjectManager {
+   
+
+}ProjectManager;
+
+
+void *project_manager_queue_draw();
+
+
+
+
+#endif // 

@@ -81,9 +81,10 @@ void add_method(StructDB *db, const char *class_name, const char *method_name, v
 void add_property(StructDB *db, const char *class_name, const char *property_name);
 void bind_method(StructDB *db, const char *class_name, const char *method_name, void (*func)(void *instance));
 void register_class(StructDB *db , const char *p_class);
-
+void unregister_class(StructDB *db, const char *class_name);
 
 #define GDREGISTER_CLASS(db, p_class) register_class(db, #p_class);
+#define BIND_METHOD(db, class_name, method_name, method_func) bind_method(db, class_name, method_name, method_func);
 
 
 #endif // STRUCT_DB_H

@@ -92,4 +92,12 @@
 
 #define RAYGUI_IMPLEMENTATION
 #include <raygui.h>
+
+#define RPNG_IMPLEMENTATION
+#include <rpng.h>
+
+
+#define CURL_IMPLEMENTATION
+#include <curl/curl.h>
+
 #endif // BAKE_CONFIG_H
