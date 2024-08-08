@@ -10,13 +10,16 @@
 #include <arm-linux-gnueabihf/sys/socket.h>
 #include <arm-linux-gnueabihf/sys/types.h>
 
+#include "core/error/error_macros.h"
 
-#ifndef(WINDOWS)
+
+
+#ifndef WINDOWS
 // NOTE : ON WINDOWS YOU NEED THIS OR INSTALL PACKAGES.PY FILE TO INSTALL 
 // IN WINDOWS
 // #include <winsock2.h>
 // #include <ws2tcpip.h>
-
+#endif 
 #define BUFFER_SIZE 1024
 
 bool http_server_start(HttpServer* self, int port) {
@@ -24,7 +27,7 @@ bool http_server_start(HttpServer* self, int port) {
 
     self->server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (self->server_fd == -1) {
-        perror("socket creation failed");
+        ERROR_PRINT("the socket has ben creation failed");
         return false;
     }
 
@@ -34,17 +37,16 @@ bool http_server_start(HttpServer* self, int port) {
     server_addr.sin_port = htons(port);
 
     if (bind(self->server_fd, (const struct sockaddr *)&server_addr, sizeof(server_addr)) != 0) {
-        perror("socket bind failed");
+        ERROR_PRINT("the socket is has bind failed");
         close(self->server_fd);
         return false;
     }
 
     if (listen(self->server_fd, 5) != 0) {
-        perror("listen failed");
+        ERROR_PRINT("listen failed");
         close(self->server_fd);
         return false;
     }
-
     self->running = true;
     return true;
 }
@@ -55,14 +57,14 @@ void http_server_handle_request(HttpServer* self) {
 
     int conn_fd = accept(self->server_fd, (struct sockaddr *)&client_addr, &len);
     if (conn_fd < 0) {
-        perror("server accept failed");
+        ERROR_PRINT("server accept failed");
         return;
     }
 
     char buffer[BUFFER_SIZE];
     int n = read(conn_fd, buffer, sizeof(buffer) - 1);
     if (n < 0) {
-        perror("read failed");
+        ERROR_PRINT("read failed");
         close(conn_fd);
         return;
     }
@@ -90,7 +92,7 @@ bool http_server_connect_to_host(HttpServer* self, const char* host, int port) {
 
     self->server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (self->server_fd == -1) {
-        perror("socket creation failed");
+        ERROR_PRINT("socket creation failed");
         return false;
     }
 
@@ -100,7 +102,7 @@ bool http_server_connect_to_host(HttpServer* self, const char* host, int port) {
     server_addr.sin_port = htons(port);
 
     if (connect(self->server_fd, (const struct sockaddr *)&server_addr, sizeof(server_addr)) != 0) {
-        perror("connect failed");
+        ERROR_PRINT("connect failed");
         close(self->server_fd);
         return false;
     }
@@ -134,7 +136,7 @@ char* http_server_query_string_from_dict(HttpServer* self, const char** dict) {
 
     char* query_string = (char*)malloc(total_length);
     if (!query_string) {
-        perror("malloc failed");
+        ERROR_PRINT("malloc failed");
         return NULL;
     }
 

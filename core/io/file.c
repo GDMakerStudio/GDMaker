@@ -3,14 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "core/variant/variant.h"
-
+#include "core/string/string.h"
+#include "core/error/error_macros.h"
 
 File* file_new() {
     File *file = (File*)malloc(sizeof(File));
     file->file_handle = NULL;
     file->file_path = NULL;
     file->error = FILE_ERROR_NONE;
+    ERROR_WARN("");
     return file;
 }
 
@@ -28,6 +29,8 @@ bool file_open(File *file, const char *path, FileMode mode) {
             break;
         case FILE_MODE_READ_WRITE:
             mode_str = "r+";
+        case FILE_MODE_READ_BLOCK:
+            mode_str = "rb";
             break;
         default:
             file->error = FILE_ERROR_UNKNOWN;
@@ -120,7 +123,7 @@ bool file_get_line(File *file, char *buffer, size_t size) {
 bool file_get_text(File *file, char *buffer, size_t size) {
     if (file->file_handle) {
         size_t bytes_read = fread(buffer, 1, size - 1, file->file_handle);
-        buffer[bytes_read] = '\0'; // Null-terminate the string
+        buffer[bytes_read] = '\0'; 
         return bytes_read > 0;
     }
     return false;

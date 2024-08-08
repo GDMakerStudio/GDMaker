@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #include "core/object/ref_counted.h"
-
+#include "core/error/error_list.h"
 
 
 typedef enum {
@@ -14,6 +14,7 @@ typedef enum {
     FILE_MODE_WRITE,
     FILE_MODE_APPEND,
     FILE_MODE_READ_WRITE,
+    FILE_MODE_READ_BLOCK,
     FILE_MODE_UNKNOWN
 } FileMode;
 
@@ -27,6 +28,7 @@ typedef enum {
 } FileError;
 
 typedef struct File  {
+    RefCounted *ref;
     FILE *file_handle;
     const char *file_path;
     FileError error;
