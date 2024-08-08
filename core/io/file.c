@@ -32,6 +32,9 @@ bool file_open(File *file, const char *path, FileMode mode) {
         case FILE_MODE_READ_BLOCK:
             mode_str = "rb";
             break;
+   	case FILE_MODE_READ_BLOCK:
+	    mode_str = "wb";
+	    break;
         default:
             file->error = FILE_ERROR_UNKNOWN;
             return false;

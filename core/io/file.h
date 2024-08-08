@@ -15,7 +15,8 @@ typedef enum {
     FILE_MODE_APPEND,
     FILE_MODE_READ_WRITE,
     FILE_MODE_READ_BLOCK,
-    FILE_MODE_UNKNOWN
+    FILE_MODE_UNKNOWN,
+    FILE_MODE_READ_BLOCK
 } FileMode;
 
 typedef enum {
