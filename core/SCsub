@@ -1,0 +1,23 @@
+Import('env')
+
+
+env_core = env.Clone()
+
+core_sources = Glob('*.c')
+
+
+env_core.add_source_files(core_sources)
+
+
+SConscript('cache/SCsub')
+SConscript('input/SCsub')
+SConscript('math/SCsub')
+SConscript('config/SCsub')
+SConscript('object/SCsub')
+SConscript('io/SCsub')
+SConscript('os/SCsub')
+SConscript('string/SCsub')
+SConstript('variant/SCsub')
+
+
+

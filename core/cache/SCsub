@@ -1,0 +1,8 @@
+Import('env')
+
+
+env_cache = env.Clone()
+
+cache_sources = Glob('*.c')
+
+env_cache.add_source_files(cache_sources)

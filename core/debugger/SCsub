@@ -1,0 +1,10 @@
+Import('env')
+
+
+env_debug = env.Clone()
+
+
+debugger_sources = Glob('*.c')
+
+
+env_debug.add_source_files(debugger_sources)

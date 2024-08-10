@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+
+Import('env')
+
+
+main_source = Glob('*.c')
+
+env.add_source_files(main_sources)
+
+
